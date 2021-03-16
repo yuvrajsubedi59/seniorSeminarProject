@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <p><a href ="{% url 'createvent' %}">Create Event</a></p>
+  <div class='events'>
+{% for event in events %}
+<div class='event'>
+<h1><a href="{% url 'eventdetail' event.slug%}">{{event.eventt}}</a></h1>
+<h3>{{event.date}}</h3>
+<h3>{{event.location}}</h3>
+</div>
+{% endfor %}
+</div>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+  <a href="{% url 'signup' %}">Sign Up</a>
+  <div class='events'>
+{% for event in events %}
+<div class='event'>
+{{event.eventt}}
+<h3>{{event.date}}</h3>
+<h3>{{event.location}}</h3>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{{object.eventt}}
+
+{% for object1 in players %}
+<p>{{object1}}</p>
+{% endfor %}
+<form method="get">
+{% csrf_token %}
+<input type='submit' value="JOIN">
+</form>
+{% endblock content %}
