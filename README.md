@@ -15,9 +15,8 @@ pip3 install django
  \q  
  
  2002  sudo systemctl start postgres - if linux  
- 2003  sudo service postgres start - if wsl  
- 2004  service --status-all  
- 2005  sudo service postgresql start  
+ 2003  sudo service postgresql start - if wsl  
+ 2004  service --status-all   
  2006  sudo -u postgres psql  
  2022  pip3 install psycopg2-binary  
  2027  python3 manage.py makemigrations  
@@ -27,3 +26,4 @@ pip3 install django
    
  Open browser: http://localhost:8080/              ------- if wsl  
                0.0.0.0:8080                        ------- if linux  
+               http://localhost:8080/admin         ------- admin page
