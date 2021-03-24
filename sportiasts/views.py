@@ -4,7 +4,7 @@ from django.template import loader
 from django.shortcuts import redirect,reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from .forms import EventForm
+from .forms import EventForm, RegisterForm
 from . import models
 # Create your views here.
 
@@ -15,7 +15,7 @@ def Categories(request):
 
 
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = RegisterForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
@@ -35,10 +35,6 @@ class EventDetailView(generic.DetailView):
     
 
     def dispatch(self, request, *args, **kwargs):
-    # Try to dispatch to the right method; if a method doesn't exist,
-    # defer to the error handler. Also defer to the error handler if the
-    # request method isn't on the approved list.
-
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
         else:

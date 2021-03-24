@@ -1,14 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% block title %}{{object.eventt}}{% endblock title %}
 {% block content %}
-{{object.eventt}}
+<div class="container">
+<h1>{{object.eventt}}</h1>
+<h2>{{object.date}}</h2>
+<h3>{{object.location}}</h3>
+<div class="card" style="width: 18rem;">
+  <ul class="list-group list-group-flush">
+  {% for object1 in players %}
+    <li class="list-group-item">{{object1}}</li>
 
-{% for object1 in players %}
-<p>{{object1}}</p>
 {% endfor %}
+    
+  </ul>
+  <div class="card-footer">
 <form method="get">
 {% csrf_token %}
-<input type='submit' value="JOIN">
+<input type='submit' class="btn btn-primary" value="JOIN">
 </form>
+  </div>
+</div>
+</div>
+
+
+
+
+
 {% endblock content %}
