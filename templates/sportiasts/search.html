@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
-
-{% block title %}Home{% endblock %}
+{% block title %}Search results for {{q}}{% endblock title %}
 
 {% block content %}
-<div  class="container">
-<form method="get" action="{% url 'search'%}">
-<input type="text" name="q" >
-<input type='submit' class="btn btn-primary" value="Search">
-</form>
+<h1>
+
+{% if empty == True %}
+No results found for {{q}}
+{% else %}
+Results for {{q}}
+</h1>
 {% if user.is_authenticated %}
-  Hi <a href=" {% url 'myevent' %} ">{{ user.first_name }} {{user.last_name}}</a>!
-  <p><a href="{% url 'logout' %}" class="btn btn-secondary">Log Out</a></p>
-  <p><a href ="{% url 'createvent' %}" class="btn btn-primary">Create Event</a></p>
   <div class='events'>
 {% for event in events %}
 
@@ -26,9 +24,6 @@
 </div>
 
 {% else %}
-  <h1>You are not logged in</h1>
-  <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
-  <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
   <div class='events'>
 {% for event in events %}
 
@@ -42,5 +37,5 @@
 {% endfor %}
 </div>
 {% endif %}
-</div>
-{% endblock %}
+{% endif %}
+{% endblock content %}

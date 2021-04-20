@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{user.first_name}}'s Events{% endblock title %}
+
+{% block content %}
+
+<h1>Name: {{user.first_name}} {{user.last_name}}</h1>
+<h2>Email: {{user.email}}</h1>
+
+ <div class='events'>
+{% for event in events %}
+
+<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header"><h1><a href="{% url 'eventdetail' event.slug%}">{{event.eventt}}</a></h1></div>
+  <div class="card-body">
+    <h5 class="card-title">{{event.date}}</h5>
+    <p class="card-text">{{event.location}}</p>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+
+
+{% endblock content %}

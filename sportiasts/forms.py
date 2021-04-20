@@ -8,9 +8,12 @@ class EventForm(forms.ModelForm):
     
     class Meta:
         model = Events
-        fields = ("eventt","slug","date","location","organizer")
+        fields = ("eventt","slug","date","time","discord_link","location","maps_url")
         widgets = {
-            'date': forms.DateInput(attrs={'type':"date"})
+            'date': forms.DateInput(attrs={'type':"date"}),
+            'time' :forms.TimeInput(attrs={'type':'time'}),
+            'discord_link':forms.URLInput(attrs={'required':'false'}),
+            'slug':forms.TextInput(attrs={'class':'form-control mb-3'})
         }
 
 class RegisterForm(UserCreationForm):
