@@ -1,18 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}{{object.eventt}}{% endblock title %}
+{% block style %}
+<link href="{% static 'sportiasts/main.css' %}" rel="stylesheet"/>
+{% endblock style %}
 {% block content %}
+
 <div class="container">
 <a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
 <h1>{{object.eventt}}</h1>
 <h2>{{object.date}}</h2>
 <h3>{{object.location}}</h3>
+{% if object.EventType %}
+<a href='{% url 'types' object.EventType.id%}'><p>{{object.EventType}}</p></a>
+{% endif %}
 {% if object.organizer == user %}
 You are the Organizer
 {% else %}
 </h3>Organized By:<a href="mailto:{{object.organizer.email}}">{{object.organizer}}</a></h3>
 {% endif %}
-
+{% if object.is_today %}
+<h3>Happenning Today</h3>
+{% endif %}
+{% if object.is_due %}
+<p> This event ended {{object.diff}} days ago.</p>
+{% endif %}
 <div class="card" style="width: 18rem;">
   <ul class="list-group list-group-flush">
 

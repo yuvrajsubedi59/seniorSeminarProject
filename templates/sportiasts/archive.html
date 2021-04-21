@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Archive{% endblock title %} 
+{% block style %}
+<link href='{% static 'sportiasts/main.css' %}' rel='stylesheet'/>
+{% endblock style %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Sportiasts</h1>
+    <p class="lead">Archived Events.</p>
+  </div>
+</div>
+
+<div class="events container">
+<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
+
+  <div class="row" style="padding: 5">
+    {% for event in events %} {% if event.is_due %}
+
+    <div class="card text-dark bg-light mb-3" style="max-width: 18rem">
+      <div class="card-header">
+        <h1>
+        {% if user.is_authenticated %}
+                  <a href="{% url 'eventdetail' event.slug%}">{{event.eventt}}</a>
+        {% else %}
+                  {{event.eventt}}
+
+        {% endif %}
+        </h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{event.date}} {{event.time}}</h5>
+        <p class="card-text">{{event.location}}</p>
+        It was {{event.diff}} days ago
+      </div>
+    </div>
+    {% endif %} {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

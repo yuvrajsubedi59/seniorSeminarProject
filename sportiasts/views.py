@@ -7,11 +7,14 @@ from django.urls import reverse_lazy
 from .forms import EventForm, RegisterForm
 from django.contrib.auth.models import User
 from . import models
+from datetime  import date as d
+from django.db.models import Q
+
 # Create your views here.
 
 def Categories(request):
     template = loader.get_template('sportiasts/home.html')
-    events = models.Events.objects.all().order_by('date').reverse()
+    events = models.Events.objects.all().reverse()
     return HttpResponse(template.render({'events':events},request))
 
 def Search(request):
@@ -19,7 +22,8 @@ def Search(request):
     q = request.GET['q']
     events = models.Events.objects.filter(
         eventt__icontains=q).order_by('date').reverse() | models.Events.objects.filter(
-        location__icontains=q).order_by('date').reverse()
+        location__icontains=q).order_by('date').reverse() | models.Events.objects.filter(
+        EventType__title__icontains=q).order_by('date').reverse()
     print(events.count())
     if events.count()==0:
         empty=True
@@ -34,6 +38,18 @@ def Myevents(request):
     print(user.players.all())
     events = user.players.all()
     return HttpResponse(template.render({'events':events,"user":user},request))
+
+def Archive(request):
+    template = loader.get_template('sportiasts/archive.html')
+    events = models.Events.objects.all().order_by('date')
+    return HttpResponse(template.render({'events':events,},request))
+
+def Types(request,id):
+    template = loader.get_template('sportiasts/types.html')
+    types = models.EventType.objects.get(pk=id)
+    print(types)
+    events = models.Events.objects.filter(EventType=types).order_by('date').reverse()
+    return HttpResponse(template.render({'eventtype':types,"events":events},request))
 
 def Removeuser(request,slug,id):
     template = loader.get_template('sportiasts/removeuser.html')

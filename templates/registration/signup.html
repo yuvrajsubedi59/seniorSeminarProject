@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Sign Up{% endblock %}
 
+{% block style %}
+<link href="{% static 'sportiasts/main.css' %}" rel="stylesheet"/>
+{% endblock style %}
+
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="row">
+    <div class="col-md-4 mx-auto holder" style="background-color: black; opacity: 0.5; color:white;">
     <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
@@ -15,6 +20,5 @@
     </div>
   </div>
 </div>
-
   
-{% endblock %}
+{% endblock content %}

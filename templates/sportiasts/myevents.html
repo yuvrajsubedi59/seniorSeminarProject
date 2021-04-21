@@ -1,23 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %} {{user.first_name}}'s Events{% endblock title %}
-
+{% block style %}
+<link href="{% static 'sportiasts/main.css' %}" rel="stylesheet" />
+{% endblock style %}
 {% block content %}
+<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
 
 <h1>Name: {{user.first_name}} {{user.last_name}}</h1>
 <h2>Email: {{user.email}}</h1>
 
- <div class='events'>
+  <p><a href="{% url 'logout' %}" class="btn btn-secondary">Log Out</a></p>
+
+
+ <div class='events container'>
+  <div class='row' style="padding:5;">
 {% for event in events %}
 
 <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
   <div class="card-header"><h1><a href="{% url 'eventdetail' event.slug%}">{{event.eventt}}</a></h1></div>
   <div class="card-body">
-    <h5 class="card-title">{{event.date}}</h5>
+    <h5 class="card-title">{{event.date}} {{event.time}}</h5>
+    {% if event.is_due %}
+    <p font-color="#00ff00">  {{event.diff}} days ago.</p>
+    {% elif event.is_today %}
+    **Happenning Today**
+    {% else %}
+     {{event.diff}} days later.
+    {% endif %}
     <p class="card-text">{{event.location}}</p>
   </div>
 </div>
 {% endfor %}
+</div>
 </div>
 
 

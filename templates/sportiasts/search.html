@@ -1,41 +1,35 @@
-{% extends 'base.html' %}
-{% block title %}Search results for {{q}}{% endblock title %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}Search results for {{q}}{% endblock title %}
+ {% block content %}
 <h1>
-
-{% if empty == True %}
-No results found for {{q}}
-{% else %}
-Results for {{q}}
+  {% if empty == True %} No results found for {{q}} {% else %} Results for {{q}}
 </h1>
 {% if user.is_authenticated %}
-  <div class='events'>
-{% for event in events %}
+<div class="events">
+  {% for event in events %}
 
-<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header"><h1><a href="{% url 'eventdetail' event.slug%}">{{event.eventt}}</a></h1></div>
-  <div class="card-body">
-    <h5 class="card-title">{{event.date}}</h5>
-    <p class="card-text">{{event.location}}</p>
+  <div class="card text-dark bg-light mb-3" style="max-width: 18rem">
+    <div class="card-header">
+      <h1><a href="{% url 'eventdetail' event.slug%}">{{event.eventt}}</a></h1>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{event.date}}</h5>
+      <p class="card-text">{{event.location}}</p>
+    </div>
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
-</div>
-
+  
 {% else %}
-  <div class='events'>
-{% for event in events %}
+<div class="events">
+  {% for event in events %}
 
-<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header"><h1>{{event.eventt}}</h1></div>
-  <div class="card-body">
-    <h5 class="card-title">{{event.date}}</h5>
-    <p class="card-text">{{event.location}}</p>
+  <div class="card text-dark bg-light mb-3" style="max-width: 18rem">
+    <div class="card-header"><h1>{{event.eventt}}</h1></div>
+    <div class="card-body">
+      <h5 class="card-title">{{event.date}}</h5>
+      <p class="card-text">{{event.location}}</p>
+    </div>
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
-</div>
-{% endif %}
-{% endif %}
-{% endblock content %}
+{% endif %} {% endif %} {% endblock content %}
