@@ -1,4 +1,5 @@
 # seniorSeminarProject  
+Senior Seminar Project  
 
 This is the code to setup the project in linux/wsl.
 Before running you must set your own username and password
@@ -6,21 +7,17 @@ in enthusports/settings.py. This needs to be the same username
 created in the database. It also need to match your command
 line username.
 
-    pip3 install django  
-    sudo apt-get install postgresql  
-    apt-get update  
+    pip3 install django    
     sudo apt-get update  
     sudo apt-get install postgresql  
-    sudo -u postgres  
+    sudo service postgresql start - if wsl
+    sudo systemctl start postgres - if linux
     sudo -u postgres psql  
         CREATE DATABASE sportiasts;  
         CREATE USER **username** WITH PASSWORD '********';  
         GRANT ALL PRIVILEGES ON DATABASE sportiasts TO **username**;  
         \q  
-    sudo systemctl start postgres - if linux  
-    sudo service postgresql start - if wsl  
-    service --status-all   
-    sudo -u postgres psql  
+    service --status-all    
     pip3 install psycopg2-binary  
     python3 manage.py makemigrations  
     python3 manage.py migrate  
