@@ -1,29 +1,32 @@
 # seniorSeminarProject  
-Senior Seminar Project  
 
-pip3 install django  
- 1996  sudo apt-get install postgresql  
- 1997  apt-get update  
- 1998  sudo apt-get update  
- 1999  sudo apt-get install postgresql  
- 2000  sudo -u postgres  
- 2001  sudo -u postgres psql  
-   
- CREATE DATABASE sportiasts;  
- CREATE USER **username** WITH PASSWORD '********';  
- GRANT ALL PRIVILEGES ON DATABASE sportiasts TO yuvraj;  
- \q  
- 
- 2002  sudo systemctl start postgres - if linux  
- 2003  sudo service postgresql start - if wsl  
- 2004  service --status-all   
- 2006  sudo -u postgres psql  
- 2022  pip3 install psycopg2-binary  
- 2027  python3 manage.py makemigrations  
- 2028  python3 manage.py migrate  
- 2029  python3 manage.py createsuperuser  
- 2032  python3 manage.py runserver 0:8080  
-   
- Open browser: http://localhost:8080/              ------- if wsl  
-               0.0.0.0:8080                        ------- if linux  
-               http://localhost:8080/admin         ------- admin page
+This is the code to setup the project in linux/wsl.
+Before running you must set your own username and password
+in enthusports/settings.py. This needs to be the same username
+created in the database. It also need to match your command
+line username.
+
+    pip3 install django  
+    sudo apt-get install postgresql  
+    apt-get update  
+    sudo apt-get update  
+    sudo apt-get install postgresql  
+    sudo -u postgres  
+    sudo -u postgres psql  
+        CREATE DATABASE sportiasts;  
+        CREATE USER **username** WITH PASSWORD '********';  
+        GRANT ALL PRIVILEGES ON DATABASE sportiasts TO **username**;  
+        \q  
+    sudo systemctl start postgres - if linux  
+    sudo service postgresql start - if wsl  
+    service --status-all   
+    sudo -u postgres psql  
+    pip3 install psycopg2-binary  
+    python3 manage.py makemigrations  
+    python3 manage.py migrate  
+    python3 manage.py createsuperuser  
+    python3 manage.py runserver 0:8080  
+
+Open browser: http://localhost:8080/     ------- if wsl  
+0.0.0.0:8080                        ------- if linux  
+http://localhost:8080/admin         ------- admin page
