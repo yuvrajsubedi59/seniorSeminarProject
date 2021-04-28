@@ -7,7 +7,9 @@ in enthusports/settings.py. This needs to be the same username
 created in the database. It also need to match your command
 line username.
 
-    pip3 install django    
+    pip3 install django
+    pip3 install folium
+    pip3 install geopy
     sudo apt-get update  
     sudo apt-get install postgresql  
     sudo service postgresql start - if wsl
