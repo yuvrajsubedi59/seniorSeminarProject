@@ -16,7 +16,7 @@ import folium
 
 def Categories(request):
     template = loader.get_template('sportiasts/home.html')
-    events = models.Events.objects..order_by("date")
+    events = models.Events.objects.order_by("date","time")
     return HttpResponse(template.render({'events':events},request))
 
 def Search(request):
