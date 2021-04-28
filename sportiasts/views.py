@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from . import models
 from datetime  import date as d
 from django.db.models import Q
+from geopy.geocoders import Nominatim
+import folium
 
 # Create your views here.
 
@@ -71,6 +73,8 @@ class CreateEvent(generic.CreateView):
     success_url = reverse_lazy('home')
     template_name = 'sportiasts/createevent.html'
 
+
+
     def form_valid(self, form):
         form.instance.organizer = self.request.user
         form.save()
@@ -81,6 +85,17 @@ class EventDetailView(generic.DetailView):
     template_name='sportiasts/eventdetail.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        #make map
+        geolocator = Nominatim(user_agent='sportiasts')
+        location= self.get_object().location
+        full_location= geolocator.geocode(location)
+        #full location has (address,(lat,long))
+        m=folium.Map(width=800, height=500, location=full_location[1])
+        folium.Marker(full_location[1], tooltip=location, icon=folium.Icon(color='purple')).add_to(m)
+        m=m._repr_html_()
+        #add map to context
+        context["fol_map"]= m
         context["players"] = self.get_object().player.all()
         print(self.request.user in context['players'])
         if self.request.user in context['players']:
@@ -88,7 +103,7 @@ class EventDetailView(generic.DetailView):
         else:
             context['join']=True
         return context
-    
+
 
     def dispatch(self, request, *args, **kwargs):
         print(self.http_method_names)
@@ -106,6 +121,3 @@ class EventDetailView(generic.DetailView):
         elif self.request.GET.get('withdraw'):
             self.get_object().player.remove(request.user)
         return handler(request, *args, **kwargs)
-   
-    
-            
