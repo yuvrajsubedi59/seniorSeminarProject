@@ -8,7 +8,7 @@ class EventForm(forms.ModelForm):
     
     class Meta:
         model = Events
-        fields = ("eventt","slug","date","time","discord_link","location","maps_url","EventType")
+        fields = ("eventt","slug","date","time","discord_link","location","EventType")#"maps_url",
         widgets = {
             'date': forms.DateInput(attrs={'type':"date"}),
             'time' :forms.TimeInput(attrs={'type':'time'}),
