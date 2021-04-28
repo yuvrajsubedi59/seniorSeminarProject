@@ -19,7 +19,7 @@ class Events(models.Model):
     date = models.DateField()
     time = models.TimeField(default="12:00:00")
     location = models.CharField(max_length=40)
-    maps_url = models.URLField(null=True,max_length=1000)
+    #maps_url = models.URLField(null=True,max_length=1000)
     discord_link = models.URLField(null=True)
     EventType = models.ForeignKey(EventType, on_delete=models.CASCADE,null=True,related_name="EventType")
     organizer = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='Organizer',)
