@@ -2,77 +2,70 @@
 {% load static %}
 {% block title %}{{object.eventt}}{% endblock title %}
 {% block style %}
-<link href="{% static 'sportiasts/main.css' %}" rel="stylesheet"/>
+    <link href="{% static 'sportiasts/main.css' %}" rel="stylesheet"/>
 {% endblock style %}
 {% block content %}
 
-<div class="container">
-<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
-<h1>{{object.eventt}}</h1>
-<h2>{{object.date}}</h2>
-<h3>{{object.location}}</h3>
-{% if object.EventType %}
-<a href='{% url 'types' object.EventType.id%}'><p>{{object.EventType}}</p></a>
-{% endif %}
-{% if object.organizer == user %}
-You are the Organizer
-{% else %}
-</h3>Organized By:<a href="mailto:{{object.organizer.email}}">{{object.organizer}}</a></h3>
-{% endif %}
-{% if object.is_today %}
-<h3>Happenning Today</h3>
-{% endif %}
-{% if object.is_due %}
-<p> This event ended {{object.diff}} days ago.</p>
-{% endif %}
-<div class="card" style="width: 18rem;">
-  <ul class="list-group list-group-flush">
+    <div class="container">
+        <a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
+        <h1>{{object.eventt}}</h1>
+        <h2>{{object.date}}</h2>
+        <h3>{{object.location}}</h3>
+        {% if object.EventType %}
+            <a href='{% url 'types' object.EventType.id%}'><p>{{object.EventType}}</p></a>
+        {% endif %}
+        {% if object.organizer == user %}
+        You are the Organizer
+        {% else %}
+            </h3>Organized By:<a href="mailto:{{object.organizer.email}}">{{object.organizer}}</a></h3>
+        {% endif %}
+        {% if object.is_today %}
+            <h3>Happenning Today</h3>
+        {% endif %}
+        {% if object.is_due %}
+            <p> This event ended {{object.diff}} days ago.</p>
+        {% endif %}
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+            {% if object.organizer == user %}
+                {% for object1 in players %}
+                    <li class="list-group-item">{{object1}}<br> <a href='mailto:{{object1.email}}'><button class="btn btn-secondary">Email</button></a>
+                        <form method="post" action="{% url 'removeuser' object.slug object1.username%}">
+                            {% csrf_token %}
+                            <input type='hidden' value="{{user}}" name='remove'>
+                            <input type='submit' class="btn btn-primary" value="Remove">
+                        </form>
+                    </li>
+                {% endfor %}
+            {% else %}
+                {% for object1 in players %}
+                    <li class="list-group-item">{{object1}}<br> <a href='mailto:{{object1.email}}'><button class="btn btn-secondary">Email</button></a></li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+            <div class="card-footer">
+                {% if join == True %}
+                    <form method="get" action="{% url 'eventdetail' object.slug%}">
+                        {% csrf_token %}
+                        <input type="hidden" name="join" value="1">
+                        <input type='submit' class="btn btn-primary" value="JOIN">
+                    </form>
+                {% endif %}
 
-    {% if object.organizer == user %}
-  {% for object1 in players %}
-    <li class="list-group-item">{{object1}}<br> <a href='mailto:{{object1.email}}'><button class="btn btn-secondary">Email</button></a>
-    <form method="post" action="{% url 'removeuser' object.slug object1.username%}">
-    {% csrf_token %}
-    <input type='hidden' value="{{user}}" name='remove'>
-    <input type='submit' class="btn btn-primary" value="Remove">
-    </form>
-    </li>
-
-{% endfor %}
-    
-{% else %}
-  {% for object1 in players %}
-    <li class="list-group-item">{{object1}}<br> <a href='mailto:{{object1.email}}'><button class="btn btn-secondary">Email</button></a></li>
-
-{% endfor %}
-    
-{% endif %}
-
-  </ul>
-  <div class="card-footer">
-  {% if join == True %}
-<form method="get" action="{% url 'eventdetail' object.slug%}">
-{% csrf_token %}
-<input type="hidden" name="join" value="1">
-<input type='submit' class="btn btn-primary" value="JOIN">
-</form>
-{% endif %}
-
-{% if join == False %}
-<form method="get" action="{% url 'eventdetail' object.slug%}">
-{% csrf_token %}
-<input type="hidden" name="withdraw" value="1">
-<input type='submit' class="btn btn-primary" value="Withdraw">
-</form>
-{% endif %}
-  </div>
-</div>
-
-<iframe src="{{object.maps_url}}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-</div>
-
-
-
-
-
+                {% if join == False %}
+                    <form method="get" action="{% url 'eventdetail' object.slug%}">
+                        {% csrf_token %}
+                        <input type="hidden" name="withdraw" value="1">
+                        <input type='submit' class="btn btn-primary" value="Withdraw">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            {{ fol_map|safe }}
+        </div>
+        <div>
+            <!-- <iframe src="{{object.maps_url}}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+        </div>
+    </div>
 {% endblock content %}
